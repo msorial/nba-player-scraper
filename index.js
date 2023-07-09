@@ -20,20 +20,29 @@ const scrapePlayers = async () => {
 
         // Wait for the elements to load
         await page.waitForSelector('[data-th="Player"]');
+        await page.waitForSelector('[data-th="Pre-Draft Team"]');
 
         // Extract data from elements with data-th attribute equal to "Player"
         const yearData = await page.evaluate((year) => {
-            const elements = document.querySelectorAll('[data-th="Player"]');
+            const playerElements =
+                document.querySelectorAll('[data-th="Player"]');
+            const preDraftTeamElements = document.querySelectorAll(
+                '[data-th="Pre-Draft Team"]',
+            );
             const dataArr = [];
 
-            elements.forEach((element) => {
-                const textContent = element.textContent.trim();
+            playerElements.forEach((playerElement, index) => {
+                const playerName = playerElement.textContent.trim();
+                const preDraftTeam =
+                    preDraftTeamElements[index].textContent.trim();
 
                 // Store the data in an object and push it to the array
                 const item = {
-                    player: textContent,
+                    player: playerName,
+                    preDraftTeam: preDraftTeam,
                     seasons: [year - 1], // Subtract 1 from the year before adding to the array
                 };
+
                 dataArr.push(item);
             });
 
@@ -42,7 +51,11 @@ const scrapePlayers = async () => {
 
         // Combine common player names
         yearData.forEach((item) => {
-            const existingPlayer = data.find((d) => d.player === item.player);
+            const existingPlayer = data.find(
+                (d) =>
+                    d.player === item.player &&
+                    d.preDraftTeam === item.preDraftTeam,
+            );
 
             if (existingPlayer) {
                 existingPlayer.seasons.push(...item.seasons);
