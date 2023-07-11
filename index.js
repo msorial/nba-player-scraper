@@ -39,7 +39,7 @@ const scrapePlayers = async () => {
                 // Store the data in an object and push it to the array
                 const item = {
                     player: playerName,
-                    preDraftTeam: preDraftTeam,
+                    predraftTeam: preDraftTeam,
                     seasons: [year - 1], // Subtract 1 from the year before adding to the array
                 };
 
@@ -54,7 +54,7 @@ const scrapePlayers = async () => {
             const existingPlayer = data.find(
                 (d) =>
                     d.player === item.player &&
-                    d.preDraftTeam === item.preDraftTeam,
+                    d.predraftTeam === item.predraftTeam,
             );
 
             if (existingPlayer) {
