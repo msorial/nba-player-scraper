@@ -40,7 +40,7 @@ const scrapePlayers = async () => {
                 const item = {
                     player: playerName,
                     predraftTeam: preDraftTeam,
-                    seasons: [year - 1], // Subtract 1 from the year before adding to the array
+                    seasons: [(year - 1).toString()], // Convert the year to a string before adding to the array
                 };
 
                 dataArr.push(item);
