@@ -39,7 +39,7 @@ const scrapePlayers = async () => {
                 // Store the data in an object and push it to the array
                 const item = {
                     player: playerName,
-                    predraftTeam: preDraftTeam,
+                    predraft: preDraftTeam,
                     seasons: [(year - 1).toString()], // Convert the year to a string before adding to the array
                 };
 
@@ -52,9 +52,7 @@ const scrapePlayers = async () => {
         // Combine common player names
         yearData.forEach((item) => {
             const existingPlayer = data.find(
-                (d) =>
-                    d.player === item.player &&
-                    d.predraftTeam === item.predraftTeam,
+                (d) => d.player === item.player && d.predraft === item.predraft,
             );
 
             if (existingPlayer) {
